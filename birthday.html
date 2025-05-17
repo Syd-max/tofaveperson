@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Best Part - Daniel Caesar | Ucapan & Lirik</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+  /* Reset dan styling dasar */
+  * {
+    box-sizing: border-box;
+  }
+  body, html {
+    margin: 0; padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
+    background: #f0f0f0;
+    color: #333;
+  }
+
+  /* Wrapper halaman */
+  #app {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Styling tiap halaman penuh layar dan terpusat */
+  .page {
+    position: absolute;
+    top:0; left:0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    transition: opacity 1s ease;
+    opacity: 0;
+    pointer-events: none;
+    background: #fff;
+  }
+  .page.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* ===========================
+     Halaman 1: Lirik & Lagu
+     =========================== */
+
+  #page1 {
+    background: linear-gradient(135deg, #a1e3d8 0%, #fbd1a2 80%);
+    color: #333;
+  }
+  .container {
+    background: rgba(255 255 255 / 0.95);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 600px;
+    margin: 60px auto 40px;
+    padding: 30px 40px;
+    position: relative;
+    z-index: 1;
+    overflow-y: auto;
+    max-height: 70vh;
+  }
+  .song-info {
+    text-align: center;
+    margin-bottom: 25px;
+  }
+  .song-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    margin: 0;
+    color: #3b5a40;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+  }
+  .artist-name {
+    font-size: 1.2rem;
+    margin-top: 6px;
+    color: #6b7b8c;
+    font-weight: 600;
+  }
+  audio {
+    display: block;
+    margin: 0 auto 15px auto;
+    width: 280px;
+    outline: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(55, 150, 131, 0.3);
+  }
+  .lyrics {
+    font-size: 1.3rem;
+    line-height: 2.1rem;
+    color: #555;
+    font-weight: 500;
+  }
+  .lyric-line {
+    opacity: 0.3;
+    transition: opacity 0.6s ease, color 0.3s ease, transform 0.3s ease;
+    cursor: default;
+    padding: 6px 8px;
+    border-radius: 8px;
+  }
+  .lyric-line.active {
+    opacity: 1;
+    color: #379683;
+    font-weight: 700;
+    font-size: 1.4rem;
+    transform: scale(1.05);
+    background: rgba(93, 173, 226, 0.12);
+    text-shadow:
+      0 0 10px #65a68d,
+      0 0 20px #b0e0aa;
+  }
+
+  /* Scrollbar styling page 1 */
+  .container::-webkit-scrollbar {
+    width: 8px;
+  }
+  .container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .container::-webkit-scrollbar-thumb {
+    background-color: #379683;
+    border-radius: 20px;
+  }
+
+  /* ===========================
+     Halaman 2: Ucapan Happy Birthday
+     =========================== */
+  #page2 {
+    background: radial-gradient(circle at center, #0f0c29, #302b63, #24243e);
+    color: #fff;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  #happy-birthday-text {
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: 0.4rem;
+    color: #ffbbda;
+    margin-bottom: 40px;
+    min-height: 4rem;
+    display: flex;
+    gap: 0.2rem;
+    z-index: 10;
+  }
+
+  .letter {
+    opacity: 0;
+    transform: translateY(40px);
+    animation-name: bounceUp;
+    animation-fill-mode: forwards;
+    animation-duration: 0.6s;
+    animation-timing-function: ease-out;
+  }
+
+  @keyframes bounceUp {
+    0% { opacity: 0; transform: translateY(40px); }
+    60% { opacity: 1; transform: translateY(-15px); }
+    80% { transform: translateY(6px); }
+    100% { transform: translateY(0); }
+  }
+
+  .stars {
+    position: absolute;
+    width: 100%; height: 100%;
+    top: 0; left: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .star {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle 2s infinite ease-in-out;
+  }
+
+  .star:nth-child(1) { top: 10%; left: 25%; animation-delay: 0s; }
+  .star:nth-child(2) { top: 35%; left: 70%; animation-delay: 0.8s; }
+  .star:nth-child(3) { top: 65%; left: 30%; animation-delay: 1.4s; }
+  .star:nth-child(4) { top: 30%; left: 85%; animation-delay: 1.1s; }
+  .star:nth-child(5) { top: 75%; left: 50%; animation-delay: 0.5s; }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.3); }
+    50% { opacity: 1; transform: scale(1.4); }
+  }
+
+  .hearts {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    z-index: 5;
+  }
+
+  .heart {
+    width: 30px;
+    height: 30px;
+    background-color: #ff6b81;
+    transform: rotate(45deg);
+    position: relative;
+    animation: floatUp 3s infinite ease-in;
+    opacity: 0.7;
+  }
+
+  .heart::before,
+  .heart::after {
+    content: "";
+    width: 30px;
+    height: 30px;
+    background-color: #ff6b81;
+    border-radius: 50%;
+    position: absolute;
+  }
+
+  .heart::before {
+    top: -15px;
+    left: 0;
+  }
+
+  .heart::after {
+    left: -15px;
+    top: 0;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(0) rotate(45deg); opacity: 0.8; }
+    100% { transform: translateY(-200px) rotate(45deg); opacity: 0; }
+  }
+
+  /* ===========================
+     Halaman 3: Ucapan & Foto Estetik
+     =========================== */
+  #page3 {
+    background: linear-gradient(135deg, #fceabb, #f8b500);
+    color: #4d2600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 30px;
+    overflow-y: auto;
+    text-align: center;
+  }
+  #page3 h2 {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 15px;
+    text-shadow: 3px 3px 8px rgba(0,0,0,0.12);
+  }
+  #page3 p {
+    font-size: 1.4rem;
+    max-width: 650px;
+    margin-bottom: 40px;
+    font-style: italic;
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+  }
+  /* Galeri gambar */
+  #photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+    gap: 22px;
+    max-width: 900px;
+    width: 100%;
+  }
+  #photo-gallery img {
+    width: 100%;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.17);
+    object-fit: cover;
+    aspect-ratio: 4 / 3;
+    transition: transform 0.4s ease;
+    cursor: pointer;
+    filter: drop-shadow(0 8px 15px rgba(0,0,0,0.1));
+  }
+  #photo-gallery img:hover {
+    transform: scale(1.08) rotate(-1deg);
+    filter: drop-shadow(0 12px 20px rgba(0,0,0,0.2));
+  }
+
+  /* Scrollbar page 3 */
+  #page3::-webkit-scrollbar {
+    width: 12px;
+  }
+  #page3::-webkit-scrollbar-track {
+    background: #fceabb;
+  }
+  #page3::-webkit-scrollbar-thumb {
+    background: #f8b500;
+    border-radius: 20px;
+  }
+
+  /* Animasi teks fade in up */
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation-fill-mode: forwards;
+    animation-name: fadeInUp;
+    animation-duration: 1s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .fade-in-delay-1 {
+    animation-delay: 0.3s;
+  }
+  .fade-in-delay-2 {
+    animation-delay: 0.8s;
+  }
+  .fade-in-delay-3 {
+    animation-delay: 1.3s;
+  }
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .container {
+      margin: 40px auto 30px;
+      padding: 20px 25px;
+      max-height: 60vh;
+    }
+    .song-title {
+      font-size: 1.8rem;
+    }
+    .lyrics {
+      font-size: 1.1rem;
+      line-height: 1.8rem;
+    }
+    audio {
+      width: 90%;
+    }
+    #happy-birthday-text {
+      font-size: 2.2rem;
+      letter-spacing: 0.15rem;
+      min-height: 3rem;
+      margin-bottom: 30px;
+      gap: 0.1rem;
+    }
+    #flower-container {
+      width: 120px;
+      height: 120px;
+    }
+    #page3 h2 {
+      font-size: 2.2rem;
+    }
+    #page3 p {
+      font-size: 1.1rem;
+      max-width: 100%;
+    }
+    #photo-gallery {
+      gap: 15px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <!-- Halaman 1: Lirik & Lagu -->
+  <section id="page1" class="page active" role="region" aria-label="Halaman lirik dan musik">
+    <div class="container" tabindex="0">
+      <div class="song-info">
+        <h1 class="song-title">Best Part</h1>
+        <div class="artist-name">Daniel Caesar</div>
+      </div>
+      <audio id="audio-player" controls preload="auto" tabindex="0" aria-label="Putar lagu Best Part oleh Daniel Caesar" src="bestpart.mp3">
+        Your browser does not support the audio element.
+      </audio>
+      <div class="lyrics" id="lyrics" aria-label="Lirik lagu Best Part, baris per baris">
+        <p class="lyric-line" data-time="15">You don't know babe</p>
+        <p class="lyric-line" data-time="18">When you hold me</p>
+        <p class="lyric-line" data-time="21">And kiss me slowly</p>
+        <p class="lyric-line" data-time="23">It's the sweetest thing</p>
+        <p class="lyric-line" data-time="27">And it don't change</p>
+        <p class="lyric-line" data-time="30">If I had it my way</p>
+        <p class="lyric-line" data-time="33">You would know that you are</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Halaman 2: Ucapan Happy Birthday -->
+  <section id="page2" class="page" role="region" aria-label="Ucapan Happy Birthday">
+    <div id="happy-birthday-text" aria-live="polite" aria-atomic="true"></div>
+
+    <div class="stars" aria-hidden="true">
+      <span class="star"></span>
+      <span class="star"></span>
+      <span class="star"></span>
+      <span class="star"></span>
+      <span class="star"></span>
+    </div>
+
+    <div class="hearts" aria-hidden="true">
+      <div class="heart" style="animation-delay: 0s;"></div>
+      <div class="heart" style="animation-delay: 1s;"></div>
+      <div class="heart" style="animation-delay: 2s;"></div>
+      <div class="heart" style="animation-delay: 3s;"></div>
+      <div class="heart" style="animation-delay: 4s;"></div>
+    </div>
+  </section>
+
+  <!-- Halaman 3: Ucapan dan Galeri Foto -->
+  <section id="page3" class="page" role="region" aria-label="Ucapan dan galeri foto">
+    <h2 class="fade-in-up fade-in-delay-1">Selamat Ulang Tahun Mas Juna!</h2>
+    <p class="fade-in-up fade-in-delay-2">
+      I hope you are always happy with me and i hope you can always get what you want.<br>
+      Thankyou for being a life partner who always makes me love you more, and thankyou for enduring your life until now.<br>
+      I Love You.
+    </p>
+    <div id="photo-gallery" class="fade-in-up fade-in-delay-3" aria-label="Galeri foto estetik">
+      <img src="gambar1.jpg" />
+      <img src="gambar2.jpg" />
+      <img src="gambar3.jpg" />
+      <img src="gambar4.jpg" />
+    </div>
+  </section>
+</div>
+
+<script>
+  // Halaman 1 - Sinkronisasi lirik dengan lagu
+  const lines = document.querySelectorAll('.lyric-line');
+  const audio = document.getElementById('audio-player');
+  let lastActiveIndex = -1;
+  let transitionedToPage2 = false;
+
+  function clearActive() {
+    lines.forEach(line => line.classList.remove('active'));
+  }
+
+  function highlightCurrentLine() {
+    const currentTime = audio.currentTime;
+    let currentIndex = 0;
+    for (let i = lines.length - 1; i >= 0; i--) {
+      if (currentTime >= parseFloat(lines[i].getAttribute('data-time'))) {
+        currentIndex = i;
+        break;
+      }
+    }
+    if (currentIndex !== lastActiveIndex) {
+      clearActive();
+      lines[currentIndex].classList.add('active');
+      lines[currentIndex].scrollIntoView({behavior: 'smooth', block: 'center'});
+      lastActiveIndex = currentIndex;
+    }
+  }
+
+  // Fungsi pindah halaman
+  function showPage(pageId) {
+    const pages = document.querySelectorAll('.page');
+    pages.forEach(p => {
+      if (p.id === pageId) {
+        p.classList.add('active');
+      } else {
+        p.classList.remove('active');
+      }
+    });
+  }
+
+  // Setelah lirik terakhir selesai, pindah halaman ke #page2
+  audio.addEventListener('timeupdate', () => {
+    if (!transitionedToPage2) {
+      highlightCurrentLine();
+      const lastTime = parseFloat(lines[lines.length - 1].getAttribute('data-time'));
+      if (audio.currentTime > lastTime + 1) {
+        transitionedToPage2 = true;
+        showPage('page2');
+        startHappyBirthdayAnimation();
+      }
+    }
+  });
+
+  // Pas lagu siap, reset highlight lirik
+  audio.addEventListener('loadedmetadata', () => {
+    clearActive();
+    if(lines.length > 0) lines[0].classList.add('active');
+  });
+
+  /* Halaman 2: Animasi teks Happy Birthday muncul huruf per huruf */
+  const happyTextContainer = document.getElementById('happy-birthday-text');
+  const message = "HAPPY BIRTHDAY!";
+
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async function writeTextOneByOne(container, text, delay=150) {
+    container.textContent = '';
+    for(let i=0; i < text.length; i++) {
+      const span = document.createElement('span');
+      span.textContent = text[i];
+      span.classList.add('letter');
+      span.style.animationDelay = (i * delay / 1000) + 's';
+      container.appendChild(span);
+      await sleep(delay);
+    }
+    // teks tetap ada, tidak dihapus
+  }
+
+  // Jalankan animasi teks saat pindah halaman 2
+  async function startHappyBirthdayAnimation() {
+    await writeTextOneByOne(happyTextContainer, message);
+    // Tunda biar teks terbaca dengan baik
+    await sleep(6000);
+    // Setelah itu pindah ke halaman 3 dan jalankan animasi fade-in
+    showPage('page3');
+    startPage3Animations();
+  }
+
+  /* Halaman 3: Jalankan animasi fade-in */
+  function startPage3Animations(){
+    const fadeTexts = document.querySelectorAll('#page3 .fade-in-up');
+    fadeTexts.forEach(el => {
+      el.style.animationPlayState = 'running';
+    });
+  }
+</script>
+</body>
+</html>
